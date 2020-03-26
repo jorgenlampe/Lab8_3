@@ -40,6 +40,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
+        System.out.println(mContacts.size());
         if (mContacts != null) {
             Contact current = mContacts.get(position);
             holder.contactForNavnView.setText(current.getForNavn());

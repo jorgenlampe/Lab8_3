@@ -71,7 +71,10 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                     categoryDAO.insert(category2);
                     Category category3 = new Category("Familie");
                     categoryDAO.insert(category3);
+
                 }
+                Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12);
+                contactDAO.insert(contact);
 //test
             });
         }
@@ -98,7 +101,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                 categoryDAO.insert(category3);
             }
             Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12);
-            //contactDAO.insert(contact);
+            contactDAO.insert(contact);
             return null;
         }
     }

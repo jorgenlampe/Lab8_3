@@ -18,17 +18,26 @@
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/design_default_color_error"
+        android:padding="15dp"
+        android:prompt="@string/app_name"
+        android:textColor="@color/design_default_color_on_primary" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@android:color/darker_gray"
+        android:background="@android:color/darker_gray"/>
 
-        />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

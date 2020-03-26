@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lab8_3.ContactViewModel;
 import com.example.lab8_3.R;
@@ -27,41 +30,35 @@ import com.example.lab8_3.entities.Contact;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private ContactViewModel model;
-    String categoryFromSpinner;
-    ArrayList<String> options = new ArrayList<>();
+    private Spinner spinner;
+    private List<Category> options = new ArrayList<>();
+    private ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        //Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        //setSupportActionBar(myToolbar);
+        spinner = findViewById(R.id.spinner);
 
-        final ContactListAdapter adapter = new ContactListAdapter(this);
+      //  final ContactListAdapter adapter = new ContactListAdapter(this);
 
         model = new ViewModelProvider(this).get(ContactViewModel.class);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+       /* RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
 
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
         //selectedCategory......
 
         //Spinnner med kategorier..... = selectedCategory
 
-        Spinner spinner = findViewById(R.id.spinner);
 
-        //LiveData<List<Category>> options = model.getAllCategories();
-        
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, options);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(this);
 
 
         /*model.getAllContactsByCategory(selectedCategory.getId()).observe(MainActivity.this, new Observer<List<Contact>>() {
@@ -70,28 +67,46 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 adapter.setContacts(contacts);}});
 */
 
-        model.getAllContactsCount().observe(MainActivity.this, new Observer<Integer>() {
+
+        /*model.getAllContactsCount().observe(MainActivity.this, new Observer<Integer>() {
             @Override
         public void onChanged(
                 @Nullable final Integer count) {
                 myToolbar.setTitle("Kontakter (" + String.valueOf(count) + ")");}});
 
-
-
+*/
         model.getAllCategories().observe(MainActivity.this, new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
-        for (Category c : categories)
-            options.add(c.getDescription());
-            }
+                 arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, categories);
+                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                System.out.println("SIZE????" + options.size());
+
+                spinner.setAdapter(arrayAdapter);
+                spinner.setOnItemSelectedListener(MainActivity.this);
+                System.out.println(options.size());
+                arrayAdapter.notifyDataSetChanged();
+                System.out.println(arrayAdapter.getCount());
+                 }
         });
+
+
     }
 
+    public void getSelectedCategory(View v) {
+        Category category = (Category) spinner.getSelectedItem();
+        displaySelectedCategory(category);
+    }
+
+    public void displaySelectedCategory(Category category) {
+        Toast.makeText(this,category.getDescription(), Toast.LENGTH_LONG).show();
+
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        categoryFromSpinner  = parent.getItemAtPosition(position).toString();
+        System.out.println("TEST");
+        Toast.makeText(this,"HELLOE",Toast.LENGTH_LONG).show();
     }
 
     @Override
