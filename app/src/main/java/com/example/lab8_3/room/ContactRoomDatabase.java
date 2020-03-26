@@ -72,7 +72,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                     Category category3 = new Category("Familie");
                     categoryDAO.insert(category3);
                 }
-
+//test
             });
         }
     };

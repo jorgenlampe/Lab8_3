@@ -58,4 +58,7 @@ public class ContactRepository {
         });
 
     }
+    public void insertContact(Contact contact) {
+        
+    }
 }
