@@ -28,6 +28,7 @@ public interface ContactDAO {
     @Query("DELETE FROM Contact")
     void deleteAllContacts();
 
+
     @Delete
     void deleteContact(Contact contact);
     /* EVT:

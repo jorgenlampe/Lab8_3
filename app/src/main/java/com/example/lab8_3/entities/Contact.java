@@ -2,6 +2,7 @@ package com.example.lab8_3.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -22,7 +23,7 @@ public class Contact {
         this.fodselsaar = fodselsaar;
     }
 
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(long category_id) {
         this.category_id = category_id;
     }
 
@@ -39,19 +40,22 @@ public class Contact {
     private String telefonnr;
     private String fodselsaar;
 
-    private int category_id;
+    private long category_id;
 
-    public int getCategory_id() {
+    public long getCategory_id() {
         return category_id;
     }
 
+
     public Contact(@NonNull String etterNavn, @NonNull String forNavn, String fbLink,
-                   String email, int id) {
+                   String email, long id, long category_id){
+
         this.etterNavn = etterNavn;
         this.forNavn = forNavn;
         this.fbLink = fbLink;
         this.id = id;
         this.email = email;
+        this.category_id = category_id;
     }
 
     public String getEmail() {
@@ -66,6 +70,7 @@ public class Contact {
         return fodselsaar;
     }
 
+@Ignore
     public Contact() {
         super();
         this.etterNavn = "";

@@ -25,6 +25,7 @@ import com.example.lab8_3.ContactViewModel;
 import com.example.lab8_3.R;
 import com.example.lab8_3.adapters.ContactListAdapter;
 import com.example.lab8_3.entities.Category;
+import com.example.lab8_3.entities.CategoryWithContacts;
 import com.example.lab8_3.entities.Contact;
 
 import java.util.ArrayList;
@@ -36,19 +37,41 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Spinner spinner;
     private List<Category> options = new ArrayList<>();
     private ArrayAdapter arrayAdapter;
+    private ContactListAdapter contactListAdapter;
+
+    private ArrayList allContacts;
+
+   // Category category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        //setSupportActionBar(myToolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
         spinner = findViewById(R.id.spinner);
+
+
+        //tester å inserte kontakt
+        //Contact testContact = new Contact("hans", "hansen", "wwww", "", 5);
+        //model.insertContact(testContact);
 
       //  final ContactListAdapter adapter = new ContactListAdapter(this);
 
         model = new ViewModelProvider(this).get(ContactViewModel.class);
 
+        allContacts = new ArrayList();
+        Contact cont = new Contact("heisann", "hoppsann", "eee", "rr", 2, 2);
+        allContacts.add(cont);
+
+        contactListAdapter = new ContactListAdapter(this);
+        contactListAdapter.setContacts(allContacts);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.setAdapter(contactListAdapter);
        /* RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
 
@@ -58,27 +81,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //Spinnner med kategorier..... = selectedCategory
 
-
-
-
-        /*model.getAllContactsByCategory(selectedCategory.getId()).observe(MainActivity.this, new Observer<List<Contact>>() {
+/*        model.getAllContactsByCategory(getSelectedCategory().getId()).observe(MainActivity.this, new Observer<List<Contact>>() {
             @Override
             public void onChanged(@Nullable final List<Contact> contacts) {
-                adapter.setContacts(contacts);}});
+                    contactListAdapter.setContacts(contacts);
+                //Log.d("catt", String.valueOf(contacts.size()));
+            }});
+
 */
 
 
-        /*model.getAllContactsCount().observe(MainActivity.this, new Observer<Integer>() {
+
+
+        model.getAllContactsCount().observe(MainActivity.this, new Observer<Integer>() {
             @Override
         public void onChanged(
                 @Nullable final Integer count) {
-                myToolbar.setTitle("Kontakter (" + String.valueOf(count) + ")");}});
+                myToolbar.setTitle("Kontakter (" + count + ")");}});
 
-*/
+
         model.getAllCategories().observe(MainActivity.this, new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
-                 arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, categories);
+                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, categories);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 System.out.println("SIZE????" + options.size());
 
@@ -91,22 +116,54 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
+        //test for å se at kontakter kommer med - OK
+        model.getAllContacts().observe(MainActivity.this, new Observer<List<Contact>>() {
+            @Override
+            public void onChanged(List<Contact> contacts) {
+            //    for (Contact c : contacts){
+//            if (c.getCategory_id() == getSelectedCategory().getId())
+              //      Log.d("zzz", String.valueOf(c.getCategory_id()));
+                //    Log.d("zzz", String.valueOf(getSelectedCategory().getId()));
+
+            allContacts.add(contacts);
+
+
+/*
+                contactListAdapter = new ContactListAdapter(getApplicationContext());
+             //   contactListAdapter.setContacts(allContacts);
+                RecyclerView recyclerView = findViewById(R.id.recyclerview);
+
+                recyclerView.setAdapter(contactListAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+Log.d("heisann", "V");*/
+            }
+        });
+
+
     }
 
-    public void getSelectedCategory(View v) {
+    public Category getSelectedCategory() {
         Category category = (Category) spinner.getSelectedItem();
-        displaySelectedCategory(category);
+   //     displaySelectedCategory(category);
+//        Log.d("catt", String.valueOf(category.getId()));
+        return category;
     }
+
+
 
     public void displaySelectedCategory(Category category) {
-        Toast.makeText(this,category.getDescription(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,category.getDescription(), Toast.LENGTH_LONG).show();
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
         System.out.println("TEST");
         Toast.makeText(this,"HELLOE",Toast.LENGTH_LONG).show();
+
+
+
     }
 
     @Override

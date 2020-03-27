@@ -7,6 +7,7 @@ import android.graphics.LightingColorFilter;
 import androidx.lifecycle.LiveData;
 
 import com.example.lab8_3.entities.Category;
+import com.example.lab8_3.entities.CategoryWithContacts;
 import com.example.lab8_3.entities.Contact;
 import com.example.lab8_3.room.CategoryDAO;
 import com.example.lab8_3.room.ContactDAO;
@@ -19,9 +20,10 @@ public class ContactRepository {
     private CategoryDAO categoryDAO;
  //. . .
 
-    private LiveData<List<Contact>> mAllContacts;   //må gjøres noe med
-    private LiveData<List<Category>> mAllCategories;  //må gjøres noe med
+    private LiveData<List<Contact>> mAllContacts;
+    private LiveData<List<Category>> mAllCategories;
     private LiveData<Integer> mAllContactsCount;
+    private LiveData<List<CategoryWithContacts>> mAllCategoriesWithContacts;
 
     public ContactRepository(Application application) {
         ContactRoomDatabase db = ContactRoomDatabase.getDatabase(application);
@@ -31,6 +33,7 @@ public class ContactRepository {
         mAllContacts = contactDAO.getAllContacts();
         mAllCategories = categoryDAO.getAllCategories();
         mAllContactsCount = contactDAO.getAllContactsCount();
+        mAllCategoriesWithContacts = contactDAO.getCategoriesWithContacts();
  //. . .
     }
 // . . .
@@ -38,6 +41,12 @@ public class ContactRepository {
         return contactDAO.getContactsByCategory(categoryId);
 
     }
+
+    public LiveData<List<CategoryWithContacts>>
+    getAllCategoriesWithContacts() {
+        return mAllCategoriesWithContacts;
+    }
+
 
     public LiveData<List<Contact>> getAllContacts(){
         return mAllContacts;
@@ -59,6 +68,6 @@ public class ContactRepository {
 
     }
     public void insertContact(Contact contact) {
-        
+        contactDAO.insert(contact);
     }
 }

@@ -13,4 +13,6 @@ public class CategoryWithContacts {
             entityColumn = "category_id"
     )
     public List<Contact> contactList;
+
+
 }

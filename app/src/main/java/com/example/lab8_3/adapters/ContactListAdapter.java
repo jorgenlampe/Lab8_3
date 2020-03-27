@@ -1,6 +1,7 @@
 package com.example.lab8_3.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         private final TextView contactForNavnView;
         private final TextView contactEtterNavnView;
 
-        private ContactViewHolder(View itemView) {
+        public ContactViewHolder(View itemView) {
             super(itemView);
             contactForNavnView = itemView.findViewById(R.id.contactEtterNavn);
             contactEtterNavnView = itemView.findViewById(R.id.contactForNavn);
@@ -28,25 +29,27 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     }
 
     private final LayoutInflater mInflater;
-    private List<Contact> mContacts; // Cached copy of words
+    private List<Contact> mContacts;
 
     public ContactListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
     @Override
-    public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);  //opprette RecyclerView ITEM
-        return new ContactViewHolder(itemView);
+    public ContactListAdapter.ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
+        return new ContactListAdapter.ContactViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         System.out.println(mContacts.size());
         if (mContacts != null) {
+            Log.d("yyy", String.valueOf(mContacts.get(position)));
             Contact current = mContacts.get(position);
             holder.contactForNavnView.setText(current.getForNavn());
             holder.contactEtterNavnView.setText(current.getEtterNavn());
         } else {
-            // Covers the case of data not being ready yet.
+             //Covers the case of data not being ready yet.
             holder.contactForNavnView.setText("No name");
             holder.contactEtterNavnView.setText("No name");
         }

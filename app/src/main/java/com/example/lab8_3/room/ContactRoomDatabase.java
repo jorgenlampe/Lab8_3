@@ -16,6 +16,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.example.lab8_3.entities.Category;
 import com.example.lab8_3.entities.Contact;
 
+import java.time.LocalDate;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -73,8 +74,9 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                     categoryDAO.insert(category3);
 
                 }
-                Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12);
+                Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12, 1);
                 contactDAO.insert(contact);
+
 //test
             });
         }
@@ -100,7 +102,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                 Category category3 = new Category("Familie");
                 categoryDAO.insert(category3);
             }
-            Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12);
+            Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12, 1);
             contactDAO.insert(contact);
             return null;
         }
