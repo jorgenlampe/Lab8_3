@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayAdapter arrayAdapter;
     private ContactListAdapter contactListAdapter;
 
-    private ArrayList allContacts;
+    private ArrayList<Contact> allContacts;
 
    // Category category;
 
@@ -60,13 +60,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         model = new ViewModelProvider(this).get(ContactViewModel.class);
 
-        allContacts = new ArrayList();
+      /*  allContacts = new ArrayList();
         Contact cont = new Contact("heisann", "hoppsann", "eee", "rr", 2, 2);
         allContacts.add(cont);
 
         contactListAdapter = new ContactListAdapter(this);
         contactListAdapter.setContacts(allContacts);
-        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+*/        RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -120,22 +120,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         model.getAllContacts().observe(MainActivity.this, new Observer<List<Contact>>() {
             @Override
             public void onChanged(List<Contact> contacts) {
-            //    for (Contact c : contacts){
-//            if (c.getCategory_id() == getSelectedCategory().getId())
-              //      Log.d("zzz", String.valueOf(c.getCategory_id()));
-                //    Log.d("zzz", String.valueOf(getSelectedCategory().getId()));
-
-            allContacts.add(contacts);
-
-
-/*
                 contactListAdapter = new ContactListAdapter(getApplicationContext());
-             //   contactListAdapter.setContacts(allContacts);
+                contactListAdapter.setContacts(contacts);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
                 recyclerView.setAdapter(contactListAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-Log.d("heisann", "V");*/
             }
         });
 
