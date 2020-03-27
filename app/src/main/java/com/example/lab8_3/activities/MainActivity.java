@@ -40,8 +40,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ContactListAdapter contactListAdapter;
 
     private ArrayList<Contact> allContacts;
-
+    private long catid;
    // Category category;
+
+    public void setCatid(long catid) {
+        this.catid = catid;
+    }
+
+    public long getCatid() {
+        return catid;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         spinner = findViewById(R.id.spinner);
+
 
 
         //tester å inserte kontakt
@@ -66,12 +75,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         contactListAdapter = new ContactListAdapter(this);
         contactListAdapter.setContacts(allContacts);
-*/        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+*/     //   RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setAdapter(contactListAdapter);
+      //  recyclerView.setAdapter(contactListAdapter);
        /* RecyclerView recyclerView = findViewById(R.id.recyclerview);
 
 
@@ -81,11 +90,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //Spinnner med kategorier..... = selectedCategory
 
-/*        model.getAllContactsByCategory(getSelectedCategory().getId()).observe(MainActivity.this, new Observer<List<Contact>>() {
+    //    setCatid(0);
+
+
+          /*  model.getAllContactsByCategory(1).observe(MainActivity.this, new Observer<List<Contact>>() {
             @Override
             public void onChanged(@Nullable final List<Contact> contacts) {
-                    contactListAdapter.setContacts(contacts);
-                //Log.d("catt", String.valueOf(contacts.size()));
+
+                Log.d("catt3", String.valueOf(getCatid()));
             }});
 
 */
@@ -100,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 myToolbar.setTitle("Kontakter (" + count + ")");}});
 
 
+
+
         model.getAllCategories().observe(MainActivity.this, new Observer<List<Category>>() {
             @Override
             public void onChanged(List<Category> categories) {
@@ -112,20 +126,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 System.out.println(options.size());
                 arrayAdapter.notifyDataSetChanged();
                 System.out.println(arrayAdapter.getCount());
+
+                setCatid(getSelectedCategory().getId());
+
                  }
         });
 
 
-        //test for å se at kontakter kommer med - OK
         model.getAllContacts().observe(MainActivity.this, new Observer<List<Contact>>() {
             @Override
             public void onChanged(List<Contact> contacts) {
-                contactListAdapter = new ContactListAdapter(getApplicationContext());
+
+                allContacts = new ArrayList<>();
+                for (Contact c : contacts)
+                    allContacts.add(c);
+
+
+           //     Log.d("allc", String.valueOf(getSelectedCategory().getId()));
+
+             /*   contactListAdapter = new ContactListAdapter(getApplicationContext());
                 contactListAdapter.setContacts(contacts);
                 RecyclerView recyclerView = findViewById(R.id.recyclerview);
-
                 recyclerView.setAdapter(contactListAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));*/
             }
         });
 
@@ -134,6 +157,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public Category getSelectedCategory() {
         Category category = (Category) spinner.getSelectedItem();
+        Log.d("catz", String.valueOf(category.getId()));
+
+
+
+
    //     displaySelectedCategory(category);
 //        Log.d("catt", String.valueOf(category.getId()));
         return category;
@@ -152,7 +180,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         System.out.println("TEST");
         Toast.makeText(this,"HELLOE",Toast.LENGTH_LONG).show();
 
+        //Log.d("select", String.valueOf(getSelectedCategory().getId()));
 
+        ArrayList<Contact> temp = new ArrayList<>();
+
+        for (Contact c : allContacts) {
+            if (getSelectedCategory().getId() == 1 || c.getCategory_id() == getSelectedCategory().getId())
+                temp.add(c);
+        }
+
+
+        contactListAdapter = new ContactListAdapter(getApplicationContext());
+
+        contactListAdapter.setContacts(temp);
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        recyclerView.setAdapter(contactListAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
     }
 

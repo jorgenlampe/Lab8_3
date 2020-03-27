@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Contact.class, Category.class}, version = 1, exportSchema = false)
 public abstract class ContactRoomDatabase extends RoomDatabase {
 
-    private final static String ALL_CONTACTS_STRING = "All contacts"; ///????
+    private final static String ALL_CONTACTS_STRING = "All contacts";
     //. . .
 
 
@@ -74,7 +74,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                     categoryDAO.insert(category3);
 
                 }
-                Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12, 1);
+                Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12, 4);
                 contactDAO.insert(contact);
 
 //test
@@ -102,7 +102,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                 Category category3 = new Category("Familie");
                 categoryDAO.insert(category3);
             }
-            Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12, 1);
+            Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12, 4);
             contactDAO.insert(contact);
             return null;
         }

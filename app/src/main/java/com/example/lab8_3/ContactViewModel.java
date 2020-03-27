@@ -28,10 +28,11 @@ public class ContactViewModel extends AndroidViewModel {
         mAllCategories = mRepository.getAllCategories();
         mAllContactsCount = mRepository.getAllContactsCount();
         mAllCategoriesWithContacts = mRepository.getAllCategoriesWithContacts();
+
     }
 
     //. . .
-    public LiveData<List<Contact>> getAllContactsByCategory(int categoryId) {
+    public LiveData<List<Contact>> getAllContactsByCategory(long categoryId) {
         return mRepository.getContactsByCategory(categoryId);
     }
 

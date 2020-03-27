@@ -37,7 +37,7 @@ public class ContactRepository {
  //. . .
     }
 // . . .
-    public LiveData<List<Contact>> getContactsByCategory(int categoryId) {
+    public LiveData<List<Contact>> getContactsByCategory(long categoryId) {
         return contactDAO.getContactsByCategory(categoryId);
 
     }
