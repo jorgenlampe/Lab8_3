@@ -1,6 +1,7 @@
 package com.example.lab8_3.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,9 +30,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         return selectedContacts;
     }
 
-    public void removeContact(Contact contact){
-        selectedContacts.remove(contact);
-    }
 
     public void setSelected(Contact contact){
 
@@ -68,13 +66,17 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         System.out.println(mContacts.size());
+        Resources res = holder.itemView.getResources();
         if (mContacts != null) {
             Log.d("yyy", String.valueOf(mContacts.get(position)));
             Contact current = mContacts.get(position);
+            holder.contactForNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_dark));
+            holder.contactEtterNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_light));
             holder.contactForNavnView.setText(current.getForNavn());
             holder.contactEtterNavnView.setText(current.getEtterNavn());
         } else {
-             //Covers the case of data not being ready yet.
+            holder.contactForNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_dark));
+            holder.contactEtterNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_light));
             holder.contactForNavnView.setText("No name");
             holder.contactEtterNavnView.setText("No name");
         }

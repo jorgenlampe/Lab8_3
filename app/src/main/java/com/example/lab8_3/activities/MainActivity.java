@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         FloatingActionButton btnAddContact = findViewById(R.id.add_contact);
         FloatingActionButton btnDeleteContact = findViewById(R.id.delete_contact);
 
+
         btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        btnDeleteContact.setOnClickListener(new View.OnClickListener() {
+        
+            btnDeleteContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedContacts = contactListAdapter.getSelected();
