@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+
+
+
         spinner = findViewById(R.id.spinner);
 
         model = new ViewModelProvider(this).get(ContactViewModel.class);
