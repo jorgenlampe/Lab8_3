@@ -51,9 +51,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-
-
-
         spinner = findViewById(R.id.spinner);
 
         model = new ViewModelProvider(this).get(ContactViewModel.class);
@@ -64,10 +61,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(getSelectedCategory().getId() == 1)
+                    showError();
+                else{
                 Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
                 intent.putExtra("category", getSelectedCategory().getDescription());
                 intent.putExtra("categoryId", getSelectedCategory().getId());
                 startActivity(intent);
+            }
             }
         });
 
@@ -125,6 +126,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
+    }
+
+    private void showError() {
+        Toast.makeText(this, "you must chose a category", Toast.LENGTH_LONG).show();
     }
 
     public Category getSelectedCategory() {
