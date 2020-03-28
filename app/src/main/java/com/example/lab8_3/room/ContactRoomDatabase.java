@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {Contact.class, Category.class}, version = 1, exportSchema = false)
 public abstract class ContactRoomDatabase extends RoomDatabase {
 
-    private final static String ALL_CONTACTS_STRING = "All contacts";
+    private final static String ALL_CONTACTS_STRING = "Alle kategorier";
     //. . .
 
 
@@ -33,7 +33,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
     public abstract CategoryDAO categoryDAO();
     // Volatile betyr at flere tråder kan referere INSTANCE på en sikker måte:
     private static volatile ContactRoomDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
+    private static final int NUMBER_OF_THREADS = 4; //?
     // I stedet for AsyncTask:
     // We've created an ExecutorService with a fixed thread pool
     // that you will use to run database operations asynchronously on a background thread.

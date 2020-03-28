@@ -15,6 +15,8 @@ import com.example.lab8_3.room.ContactRoomDatabase;
 
 import java.util.List;
 
+import static com.example.lab8_3.room.ContactRoomDatabase.databaseWriteExecutor;
+
 public class ContactRepository {
     private ContactDAO contactDAO;
     private CategoryDAO categoryDAO;
@@ -62,12 +64,26 @@ public class ContactRepository {
  //. . .
     // NB! Bruker WriteExecutor:
     public void deleteAllContacts() {
-        ContactRoomDatabase.databaseWriteExecutor.execute(() -> {
+        databaseWriteExecutor.execute(() -> {
             contactDAO.deleteAllContacts();
         });
 
     }
     public void insertContact(Contact contact) {
-        contactDAO.insert(contact);
+
+        databaseWriteExecutor.execute(()-> {
+
+               contactDAO.insert(contact);
+            });
+
+    }
+
+    public void deleteContact(Contact contact) {
+
+        databaseWriteExecutor.execute(()-> {
+
+            contactDAO.deleteContact(contact);
+        });
+
     }
 }

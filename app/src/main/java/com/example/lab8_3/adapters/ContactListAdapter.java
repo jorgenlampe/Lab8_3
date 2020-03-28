@@ -1,25 +1,47 @@
 package com.example.lab8_3.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab8_3.ContactViewModel;
 import com.example.lab8_3.R;
 import com.example.lab8_3.entities.Contact;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder {
+    List<Contact> selectedContacts = new ArrayList<>();
+
+    public List<Contact> getSelected() {
+
+        return selectedContacts;
+    }
+
+    public void removeContact(Contact contact){
+        selectedContacts.remove(contact);
+    }
+
+    public void setSelected(Contact contact){
+
+        selectedContacts.add(contact);
+    }
+
+        public class ContactViewHolder extends RecyclerView.ViewHolder {
         private final TextView contactForNavnView;
         private final TextView contactEtterNavnView;
+
 
         public ContactViewHolder(View itemView) {
             super(itemView);
@@ -31,7 +53,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private final LayoutInflater mInflater;
     private List<Contact> mContacts;
 
-    public ContactListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    public ContactListAdapter(Context context) {
+
+        mInflater = LayoutInflater.from(context);
+    }
 
     @Override
     public ContactListAdapter.ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,6 +78,31 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             holder.contactForNavnView.setText("No name");
             holder.contactEtterNavnView.setText("No name");
         }
+
+
+
+        holder.contactForNavnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.contactForNavnView.setBackgroundColor(Color.LTGRAY);
+                holder.contactEtterNavnView.setBackgroundColor(Color.LTGRAY);
+                Contact contact = mContacts.get(holder.getAdapterPosition());
+                setSelected(contact);
+
+            }
+        });
+
+        holder.contactEtterNavnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.contactForNavnView.setBackgroundColor(Color.LTGRAY);
+                holder.contactEtterNavnView.setBackgroundColor(Color.LTGRAY);
+                Contact contact = mContacts.get(holder.getAdapterPosition());
+                setSelected(contact);
+
+            }
+        });
+
     }
 
     public void setContacts(List<Contact> contacts){
@@ -66,4 +116,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             return mContacts.size();
         else return 0;
     }
+
+
 }

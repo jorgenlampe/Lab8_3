@@ -50,6 +50,9 @@ public class ContactViewModel extends AndroidViewModel {
         mRepository.insertContact(contact);
     }
 
+    public void deleteContact(Contact contact){ mRepository.deleteContact(contact);
+    }
+
     public LiveData<List<Contact>> getAllContacts(){return mAllContacts;}
 
 }

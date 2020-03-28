@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.accounts.AccountAuthenticatorActivity;
+import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.example.lab8_3.adapters.ContactListAdapter;
 import com.example.lab8_3.entities.Category;
 import com.example.lab8_3.entities.CategoryWithContacts;
 import com.example.lab8_3.entities.Contact;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,18 +40,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private List<Category> options = new ArrayList<>();
     private ArrayAdapter arrayAdapter;
     private ContactListAdapter contactListAdapter;
-
+    private List<Contact> selectedContacts;
     private ArrayList<Contact> allContacts;
-    private long catid;
-   // Category category;
 
-    public void setCatid(long catid) {
-        this.catid = catid;
-    }
-
-    public long getCatid() {
-        return catid;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,50 +52,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setSupportActionBar(myToolbar);
         spinner = findViewById(R.id.spinner);
 
-
-
-        //tester å inserte kontakt
-        //Contact testContact = new Contact("hans", "hansen", "wwww", "", 5);
-        //model.insertContact(testContact);
-
-      //  final ContactListAdapter adapter = new ContactListAdapter(this);
-
         model = new ViewModelProvider(this).get(ContactViewModel.class);
 
-      /*  allContacts = new ArrayList();
-        Contact cont = new Contact("heisann", "hoppsann", "eee", "rr", 2, 2);
-        allContacts.add(cont);
+        FloatingActionButton btnAddContact = findViewById(R.id.add_contact);
+        FloatingActionButton btnDeleteContact = findViewById(R.id.delete_contact);
 
-        contactListAdapter = new ContactListAdapter(this);
-        contactListAdapter.setContacts(allContacts);
-*/     //   RecyclerView recyclerView = findViewById(R.id.recyclerview);
-
-
-       // recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-      //  recyclerView.setAdapter(contactListAdapter);
-       /* RecyclerView recyclerView = findViewById(R.id.recyclerview);
-
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
-        //selectedCategory......
-
-        //Spinnner med kategorier..... = selectedCategory
-
-    //    setCatid(0);
-
-
-          /*  model.getAllContactsByCategory(1).observe(MainActivity.this, new Observer<List<Contact>>() {
+        btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable final List<Contact> contacts) {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
+                intent.putExtra("category", getSelectedCategory().getDescription());
+                intent.putExtra("categoryId", getSelectedCategory().getId());
+                startActivity(intent);
+            }
+        });
 
-                Log.d("catt3", String.valueOf(getCatid()));
-            }});
+        btnDeleteContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedContacts = contactListAdapter.getSelected();
 
-*/
+                for(Contact contact : selectedContacts){
+                    model.deleteContact(contact);
+                    contactListAdapter.setContacts(allContacts);
+                    contactListAdapter.notifyDataSetChanged();
 
 
+                }
+            }
+        });
 
 
         model.getAllContactsCount().observe(MainActivity.this, new Observer<Integer>() {
@@ -127,9 +105,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 arrayAdapter.notifyDataSetChanged();
                 System.out.println(arrayAdapter.getCount());
 
-                setCatid(getSelectedCategory().getId());
-
-                 }
+                                 }
         });
 
 
@@ -141,14 +117,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 for (Contact c : contacts)
                     allContacts.add(c);
 
-
-           //     Log.d("allc", String.valueOf(getSelectedCategory().getId()));
-
-             /*   contactListAdapter = new ContactListAdapter(getApplicationContext());
-                contactListAdapter.setContacts(contacts);
-                RecyclerView recyclerView = findViewById(R.id.recyclerview);
-                recyclerView.setAdapter(contactListAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));*/
             }
         });
 
@@ -159,11 +127,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Category category = (Category) spinner.getSelectedItem();
         Log.d("catz", String.valueOf(category.getId()));
 
-
-
-
-   //     displaySelectedCategory(category);
-//        Log.d("catt", String.valueOf(category.getId()));
         return category;
     }
 
@@ -179,8 +142,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         System.out.println("TEST");
         Toast.makeText(this,"HELLOE",Toast.LENGTH_LONG).show();
-
-        //Log.d("select", String.valueOf(getSelectedCategory().getId()));
 
         ArrayList<Contact> temp = new ArrayList<>();
 
