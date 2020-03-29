@@ -96,4 +96,25 @@ public class ContactRepository {
         return contactDAO.getContact(id);
 
     }
+    public void deleteCategory(Category category) {
+
+        databaseWriteExecutor.execute(()-> {
+
+            categoryDAO.deleteCategory(category);
+            System.out.println("DELETED");
+        });
+
+    }
+
+    public void insertCategory(Category category) {
+        databaseWriteExecutor.execute(()->{
+            categoryDAO.insert(category);
+        });
+    }
+
+    public void updateCategory(Category category) {
+        databaseWriteExecutor.execute(() -> {
+            categoryDAO.editCategory(category);
+        });
+    }
 }

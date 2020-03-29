@@ -14,6 +14,9 @@ import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -152,9 +155,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        System.out.println("TEST");
-        Toast.makeText(this,"HELLOE",Toast.LENGTH_LONG).show();
-
         ArrayList<Contact> temp = new ArrayList<>();
 
         for (Contact c : allContacts) {
@@ -176,5 +176,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, CategoryListActivity.class);
+        startActivity(intent);
+        return false;
     }
 }

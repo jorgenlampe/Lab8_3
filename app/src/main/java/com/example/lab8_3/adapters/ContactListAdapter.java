@@ -43,7 +43,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             contactView = itemView.findViewById(R.id.contact);
         }
         public void Bind(int position){
-            System.out.println(mContacts.size());
             if (mContacts != null) {
                 Contact current = mContacts.get(position);
                 String contactStringBuilder = current.getForNavn() + " " + current.getEtterNavn() + " (" + current.getEmail() + ")";

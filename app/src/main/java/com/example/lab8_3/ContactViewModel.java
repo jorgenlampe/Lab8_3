@@ -60,4 +60,7 @@ public class ContactViewModel extends AndroidViewModel {
 
     public Contact getContact(int id){ return mRepository.getContact(id);}
 
+    public void deleteCategory(Category category) {mRepository.deleteCategory(category);}
+    public void insertCategory(Category category) { mRepository.insertCategory(category);}
+    public void updateCategory(Category category) {mRepository.updateCategory(category);}
 }
