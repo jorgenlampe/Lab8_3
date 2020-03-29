@@ -24,7 +24,6 @@ import java.util.List;
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
 
     private Contact selectedContact;
-
     public Contact getSelected() {
 
         return selectedContact;
@@ -39,10 +38,33 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         public class ContactViewHolder extends RecyclerView.ViewHolder {
         private final TextView contactView;
 
-
         public ContactViewHolder(View itemView) {
             super(itemView);
             contactView = itemView.findViewById(R.id.contact);
+        }
+        public void Bind(int position){
+            System.out.println(mContacts.size());
+            if (mContacts != null) {
+                Contact current = mContacts.get(position);
+                String contactStringBuilder = current.getForNavn() + " " + current.getEtterNavn() + " (" + current.getEmail() + ")";
+                contactView.setText(contactStringBuilder);
+            } else {
+                contactView.setText("No name");
+            }
+            contactView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Contact contact = mContacts.get(getAdapterPosition());
+                    if(contact == getSelected()) {
+                        contactView.setBackgroundColor(Color.WHITE);
+                        setSelected(null);
+                    } else {
+                        contactView.setBackgroundColor(Color.LTGRAY);
+                        setSelected(contact);
+                    }
+
+                }
+            });
         }
     }
 
@@ -63,26 +85,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
-        System.out.println(mContacts.size());
-        Resources res = holder.itemView.getResources();
-        if (mContacts != null) {
-            Contact current = mContacts.get(position);
-            String contactStringBuilder = current.getForNavn() + " " + current.getEtterNavn() + " (" + current.getEmail() + ")";
-            holder.contactView.setText(contactStringBuilder);
-        } else {
-            holder.contactView.setText("No name");
-        }
+        holder.Bind(position);
 
-
-
-        holder.contactView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.contactView.setBackgroundColor(Color.LTGRAY);
-                Contact contact = mContacts.get(holder.getAdapterPosition());
-                setSelected(contact);
-            }
-        });
     }
 
     public void setContacts(List<Contact> contacts){

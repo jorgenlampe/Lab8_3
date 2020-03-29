@@ -86,4 +86,14 @@ public class ContactRepository {
         });
 
     }
+    public void editContact(Contact contact) {
+        databaseWriteExecutor.execute(() -> {
+            contactDAO.editContact(contact);
+        });
+    }
+
+    public Contact getContact(int id){
+        return contactDAO.getContact(id);
+
+    }
 }

@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 model.deleteContact(selectedContact);
                 contactListAdapter.setContacts(allContacts);
                 contactListAdapter.notifyDataSetChanged();
+
             }
         });
 
@@ -89,7 +90,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 Contact selectedContact = contactListAdapter.getSelected();
-
+                Intent intent = new Intent(MainActivity.this, EditContacts.class);
+                intent.putExtra("contact", selectedContact);
+                startActivity(intent);
             }
         });
         model.getAllContactsCount().observe(MainActivity.this, new Observer<Integer>() {
@@ -108,7 +111,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(arrayAdapter);
                 spinner.setOnItemSelectedListener(MainActivity.this);
+                System.out.println(options.size());
                 arrayAdapter.notifyDataSetChanged();
+                System.out.println(arrayAdapter.getCount());
 
                                  }
         });
@@ -121,10 +126,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 allContacts = new ArrayList<>();
                 for (Contact c : contacts)
                     allContacts.add(c);
-
             }
         });
-
 
     }
 

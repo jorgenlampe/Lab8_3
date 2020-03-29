@@ -22,6 +22,9 @@ public interface ContactDAO {
     @Query("SELECT * FROM Contact WHERE category_id = :categoryId ORDER BY forNavn ASC")
             LiveData<List<Contact>> getContactsByCategory(long categoryId);
 
+    @Query("SELECT * FROM Contact WHERE id =:id")
+    Contact getContact(int id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Contact contact);
 

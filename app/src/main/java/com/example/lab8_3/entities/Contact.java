@@ -1,15 +1,41 @@
 package com.example.lab8_3.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Contact {
+public class Contact implements Parcelable {
 
     @NonNull
     private String etterNavn;
+
+    protected Contact(Parcel in) {
+        etterNavn = in.readString();
+        forNavn = in.readString();
+        fbLink = in.readString();
+        id = in.readLong();
+        email = in.readString();
+        telefonnr = in.readString();
+        fodselsaar = in.readString();
+        category_id = in.readLong();
+    }
+
+    public static final Creator<Contact> CREATOR = new Creator<Contact>() {
+        @Override
+        public Contact createFromParcel(Parcel in) {
+            return new Contact(in);
+        }
+
+        @Override
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
 
     public void setEmail(String email) {
         this.email = email;
@@ -115,6 +141,23 @@ public class Contact {
     @Override
     public String toString() {
         return id + " " + etterNavn + " " + forNavn;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(etterNavn);
+        dest.writeString(forNavn);
+        dest.writeString(fbLink);
+        dest.writeLong(id);
+        dest.writeString(email);
+        dest.writeString(telefonnr);
+        dest.writeString(fodselsaar);
+        dest.writeLong(category_id);
     }
 }
 
