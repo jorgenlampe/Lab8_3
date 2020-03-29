@@ -54,8 +54,8 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Contact newContact = new Contact(etEtterNavn.getText().toString(), etForNavn.getText().toString(), etEmail.getText().toString(), "", 0, categoryId);
+                System.out.println(etEmail.getText());
                 model.insertContact(newContact);
-
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
                 startActivity(intent);

@@ -74,7 +74,7 @@ public abstract class ContactRoomDatabase extends RoomDatabase {
                     categoryDAO.insert(category3);
 
                 }
-                Contact contact = new Contact("Hårstad", "Peer", "http...", "per@mail.nå", 12, 4);
+                Contact contact = new Contact("Hårstad", "Peer", "per@mail.nå", "http...", 12, 4);
                 contactDAO.insert(contact);
 
 //test

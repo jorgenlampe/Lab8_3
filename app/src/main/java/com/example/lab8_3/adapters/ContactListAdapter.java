@@ -23,28 +23,26 @@ import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactViewHolder> {
 
-    List<Contact> selectedContacts = new ArrayList<>();
+    private Contact selectedContact;
 
-    public List<Contact> getSelected() {
+    public Contact getSelected() {
 
-        return selectedContacts;
+        return selectedContact;
     }
 
 
     public void setSelected(Contact contact){
 
-        selectedContacts.add(contact);
+        selectedContact = (contact);
     }
 
         public class ContactViewHolder extends RecyclerView.ViewHolder {
-        private final TextView contactForNavnView;
-        private final TextView contactEtterNavnView;
+        private final TextView contactView;
 
 
         public ContactViewHolder(View itemView) {
             super(itemView);
-            contactForNavnView = itemView.findViewById(R.id.contactEtterNavn);
-            contactEtterNavnView = itemView.findViewById(R.id.contactForNavn);
+            contactView = itemView.findViewById(R.id.contact);
         }
     }
 
@@ -68,43 +66,23 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         System.out.println(mContacts.size());
         Resources res = holder.itemView.getResources();
         if (mContacts != null) {
-            Log.d("yyy", String.valueOf(mContacts.get(position)));
             Contact current = mContacts.get(position);
-            holder.contactForNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_dark));
-            holder.contactEtterNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_light));
-            holder.contactForNavnView.setText(current.getForNavn());
-            holder.contactEtterNavnView.setText(current.getEtterNavn());
+            String contactStringBuilder = current.getForNavn() + " " + current.getEtterNavn() + " (" + current.getEmail() + ")";
+            holder.contactView.setText(contactStringBuilder);
         } else {
-            holder.contactForNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_dark));
-            holder.contactEtterNavnView.setBackgroundColor(res.getColor(android.R.color.holo_orange_light));
-            holder.contactForNavnView.setText("No name");
-            holder.contactEtterNavnView.setText("No name");
+            holder.contactView.setText("No name");
         }
 
 
 
-        holder.contactForNavnView.setOnClickListener(new View.OnClickListener() {
+        holder.contactView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.contactForNavnView.setBackgroundColor(Color.LTGRAY);
-                holder.contactEtterNavnView.setBackgroundColor(Color.LTGRAY);
+                holder.contactView.setBackgroundColor(Color.LTGRAY);
                 Contact contact = mContacts.get(holder.getAdapterPosition());
                 setSelected(contact);
-
             }
         });
-
-        holder.contactEtterNavnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.contactForNavnView.setBackgroundColor(Color.LTGRAY);
-                holder.contactEtterNavnView.setBackgroundColor(Color.LTGRAY);
-                Contact contact = mContacts.get(holder.getAdapterPosition());
-                setSelected(contact);
-
-            }
-        });
-
     }
 
     public void setContacts(List<Contact> contacts){

@@ -47,8 +47,7 @@ public class Contact {
     }
 
 
-    public Contact(@NonNull String etterNavn, @NonNull String forNavn, String fbLink,
-                   String email, long id, long category_id){
+    public Contact(@NonNull String etterNavn, @NonNull String forNavn, String email, String fbLink, long id, long category_id){
 
         this.etterNavn = etterNavn;
         this.forNavn = forNavn;

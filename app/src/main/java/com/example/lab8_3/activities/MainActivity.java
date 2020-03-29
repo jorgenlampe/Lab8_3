@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ArrayList<Contact> allContacts;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         FloatingActionButton btnAddContact = findViewById(R.id.add_contact);
         FloatingActionButton btnDeleteContact = findViewById(R.id.delete_contact);
-
+        FloatingActionButton btnEditContact = findViewById(R.id.edit_contact);
 
         btnAddContact.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,19 +78,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             btnDeleteContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedContacts = contactListAdapter.getSelected();
-
-                for(Contact contact : selectedContacts){
-                    model.deleteContact(contact);
-                    contactListAdapter.setContacts(allContacts);
-                    contactListAdapter.notifyDataSetChanged();
-
-
-                }
+                Contact selectedContact = contactListAdapter.getSelected();
+                model.deleteContact(selectedContact);
+                contactListAdapter.setContacts(allContacts);
+                contactListAdapter.notifyDataSetChanged();
             }
         });
 
+        btnEditContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Contact selectedContact = contactListAdapter.getSelected();
 
+            }
+        });
         model.getAllContactsCount().observe(MainActivity.this, new Observer<Integer>() {
             @Override
         public void onChanged(
@@ -104,13 +106,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onChanged(List<Category> categories) {
                 arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_spinner_item, categories);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                System.out.println("SIZE????" + options.size());
-
                 spinner.setAdapter(arrayAdapter);
                 spinner.setOnItemSelectedListener(MainActivity.this);
-                System.out.println(options.size());
                 arrayAdapter.notifyDataSetChanged();
-                System.out.println(arrayAdapter.getCount());
 
                                  }
         });
